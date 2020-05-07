@@ -10,7 +10,7 @@ services:
     links:
       - mongodb # link this service to the database service
     volumes:
-      - ./web_db_rest/:/usr/src/web_db_rest
+      - ./dir_app/:/usr/src/dir_app
     depends_on:
       - mongodb
     restart: always
