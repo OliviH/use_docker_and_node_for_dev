@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  my_application: #name of your service
+    build: ./dir_app/ # specify the directory of the Dockerfile
+    ports:
+      - "127.0.0.1:9010:9010" #specify ports forwarding
+    networks:
+      - nettiers
+    links:
+      - mongodb # link this service to the database service
+    volumes:
+      - ./web_db_rest/:/usr/src/web_db_rest
+    depends_on:
+      - mongodb
+    restart: always
+  mongodb:
+    image: 'bitnami/mongodb:4.0'
+    volumes:
+      - './dir_db/:/bitnami'
+    networks:
+      - nettiers
+    environment:
+      - MONGODB_ROOT_PASSWORD=rootpwd
+      - MONGODB_USERNAME=user_name
+      - MONGODB_PASSWORD=user_password
+      - MONGODB_DATABASE=my_database
+
+networks:
+  nettiers:
+    driver: bridge
